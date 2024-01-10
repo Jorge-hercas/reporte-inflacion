@@ -46,9 +46,15 @@ datos <-
 
 #source("componentes data.R")
 
-
-
-
+series <- tibble(
+  Serie = c("TIIE","TIIE 28 días",
+            "TIIE 91 días","TIIE 182 días","Tasa objetivo",
+            "Tipo de cambio FIX","Incremento salarial contractual",
+            "Salario mínimo","Tasa de desempleo"),
+  ID = c("SF331451","SF43783",
+         "SF43878","SF111916","SF61745","SF17906","SL138","SL11298",
+         "SL1")
+)
 
 
 datos_globo <- data.frame(

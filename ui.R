@@ -89,6 +89,28 @@ ui <- htmlTemplate(filename = "www/index.html",
                                      echarts4rOutput("pronostico"))
                        )
                      )
+                   ),
+                   
+                   otras_series = fluidPage(
+                     fluidRow(
+                       column(
+                         width = 12,
+                         align ="center",
+                         pickerInput("otraserie", "Otras series disponibles", choices = series$Serie)
+                       ),
+                       column(width = 12, 
+                              align ="center",
+                              actionButton("graficar_otras", "Graficar", icon = icon("line-chart") ))
+                     ),
+                     br(),
+                     fluidRow(
+                       column(
+                         width = 12,
+                         echarts4rOutput("nueva_serie")
+                       )
+                     )
+                     
+                     
                    )
                    
                 )

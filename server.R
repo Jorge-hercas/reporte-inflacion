@@ -278,6 +278,52 @@ server <- function(input, output, session){
   }) |> 
     bindEvent(input$in_plot)
   
+  
+  output$nueva_serie <- renderEcharts4r({
+    
+    serie <- 
+      getSerieDataFrame(getSeriesData(c( series$ID[series$Serie == input$otraserie] ), 
+                                      as.Date('1950-01-01'),
+                                      today() %m+% years(1)), 
+                        c( series$ID[series$Serie == input$otraserie] ))
+    
+    
+    serie |> 
+      filter(
+        between(date, input$fechas[1],input$fechas[2])
+      ) |> 
+      mutate(
+        date = floor_date(date, input$red_fechas)
+      ) |> 
+      group_by(date) |> 
+      summarise(
+        value = mean(value)
+      ) |> 
+      e_charts(date) |> 
+      e_line(value, symbol = "none", name = "Evolución") |> 
+      e_theme("auritus") |> 
+      e_tooltip(trigger = "axis") |> 
+      e_color(color = "#913939") |> 
+      e_legend(bottom = 0,
+               textStyle = list(fontFamily = "Roboto Condensed", 
+                                color = "gray",
+                                fontSize = 12)) |> 
+      e_title(input$otraserie , 
+              left = "center",
+              textStyle = list(
+                color = "gray",
+                fontFamily = "Roboto Condensed"
+              )
+      ) |> 
+      e_toolbox_feature(
+        feature = c("dataZoom", "restore")
+      )
+    
+    
+    
+  }) |> 
+    bindEvent(input$graficar_otras)
+  
 }
 
 
